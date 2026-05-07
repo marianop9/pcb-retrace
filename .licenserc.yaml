@@ -1,0 +1,20 @@
+# Copyright (c) 2025-2026 Taras Greben
+# SPDX-License-Identifier: AGPL-3.0-only OR LicenseRef-Commercial-pcb-retrace
+# See LICENSE file for details.
+
+header:
+  license:
+    spdx-id: "AGPL-3.0-only"
+    copyright-owner: "Taras Greben"
+    content: |
+      Copyright (c) 2025-2026 Taras Greben
+      SPDX-License-Identifier: AGPL-3.0-only OR LicenseRef-Commercial-pcb-retrace
+      See LICENSE file for details.
+
+  paths-ignore:
+    - 'dist'
+    - 'node_modules'
+    - 'docs/CNAME'
+    - '**/*.md'
+    - 'LICENSE'
+    - '.github'

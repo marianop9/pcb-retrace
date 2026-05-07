@@ -1,0 +1,30 @@
+name: Auto Add License Headers
+on:
+  workflow_dispatch: 
+
+jobs:
+  add-headers:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write # Needed to open the PR
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Inject Copyright Headers
+        uses: apache/skywalking-eyes/header@main
+        with:
+          mode: fix
+          config: .licenserc.yaml
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v6
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: "chore: automatically enrich source files with copyright headers"
+          title: "chore: add missing copyright headers"
+          body: "This PR automatically adds the missing SPDX copyright headers to all source files."
+          branch: "chore/add-license-headers"
+          base: "main"

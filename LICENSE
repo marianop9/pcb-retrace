@@ -8,7 +8,7 @@ This software is available under two different licenses:
    this software for free, provided that you disclose your source code and 
    license modified versions under the same AGPLv3 terms (including network use).
 
-2. Commercial License
+2. Commercial License (LicenseRef-Commercial-pcb-retrace)
    If you wish to use this software in a proprietary setting, without the 
    obligations of the AGPLv3 (such as disclosing your modifications), you 
    must acquire a commercial license. 
@@ -20,7 +20,7 @@ This software is available under two different licenses:
 GNU AFFERO GENERAL PUBLIC LICENSE
 Version 3, 19 November 2007
 
-Copyright (C) 2025 Taras Greben
+Copyright (C) 2025-2026 Taras Greben
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU Affero General Public License as published by
