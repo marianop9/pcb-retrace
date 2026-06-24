@@ -681,6 +681,29 @@
 				height: 100%;
 			}
 		}
+
+		.detected-box {
+            box-sizing: border-box;
+            pointer-events: border; /* Allows clicking the box border, or set to 'none' to click through it */
+            transition: background-color 0.2s ease;
+            }
+
+            .detected-box:hover {
+            background-color: rgba(22, 163, 74, 0.15); /* Highlight on hover */
+            cursor: pointer;
+            }
+
+            .box-label {
+            position: absolute;
+            top: -20px;
+            left: -2px;
+            background: #16a34a;
+            color: white;
+            font-size: 11px;
+            padding: 2px 6px;
+            border-radius: 3px 3px 0 0;
+            white-space: nowrap;
+        }
 	</style>
 </head>
 <body>
@@ -838,6 +861,7 @@
 			<button class="icon-btn secondary" onclick="document.getElementById('import-file-input').click()" title="Upload Image">📁</button>
 			<button class="icon-btn secondary" onclick="ImageImporter.openCamera()" title="Camera">📷</button>
 			<button class="icon-btn secondary" onclick="openImageSettings()" title="Image Settings">✎</button>
+			<button class="icon-btn secondary" onclick="autoDetect()" title="Auto-Detect">AD</button>
 			<div style="width:1px; height:20px; background:#cbd5e1; margin:0 0.5rem;"></div>
 			<button class="secondary sm-btn" onclick="fitMap()">Fit</button>
 		</div>

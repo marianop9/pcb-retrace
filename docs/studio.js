@@ -1750,7 +1750,7 @@ async function showImage(id) {
 	currentImgId = id;
 	const imgSel = document.getElementById('image-select');
 	if (imgSel && imgSel.value !== id) imgSel.value = id;
-	const imgObj = bomImages.find(i => i.id === id);
+  	const imgObj = bomImages.find(i => i.id === id);
 	if (!imgObj) return;
 	const url = URL.createObjectURL(imgObj.blob);
 	const currentImg = document.getElementById('map-content').querySelector('.pcb-image');
@@ -1857,6 +1857,105 @@ function openImageSettings() {
 
 	document.getElementById('edit-image-name').value = img.name;
 	document.getElementById('image-settings-modal').style.display = 'flex';
+}
+
+function blobToBase64(blob) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+
+    // FileReader finishes reading the blob
+    reader.onloadend = () => resolve(reader.result);
+
+    // Handle potential errors
+    reader.onerror = reject;
+
+    // Read the blob as a Data URL (which is base64 encoded)
+    reader.readAsDataURL(blob);
+  });
+};
+
+// Simulates an HTTP request fetching static JSON after a short delay
+async function fetchStaticData() {
+  return new Promise((resolve, reject) => {
+    // Simulate a 1-second network latency
+    setTimeout(() => {
+      // Your static JSON payload
+      const mockResponse = {"inference_id":"74f21645-702d-4c84-b617-d66b70f5c822","time":0.14384465804323554,"image":{"width":3024,"height":4032},"predictions":[{"x":1598.0,"y":2554.5,"width":184.0,"height":291.0,"confidence":0.8722081184387207,"class":"IC","class_id":0,"detection_id":"0fb18048-b34e-4f5c-91c0-4d455f735570"},{"x":1261.5,"y":1598.0,"width":181.0,"height":292.0,"confidence":0.8533809781074524,"class":"IC","class_id":0,"detection_id":"cf4049a9-2563-4abb-912c-5928c57a5cf4"},{"x":892.5,"y":1590.5,"width":189.0,"height":287.0,"confidence":0.8415342569351196,"class":"IC","class_id":0,"detection_id":"bdfee097-e1b1-4b08-8e8a-c4b542eb4023"},{"x":1640.0,"y":1600.5,"width":174.0,"height":279.0,"confidence":0.824837327003479,"class":"IC","class_id":0,"detection_id":"bd45d6c1-0640-4880-91e9-28cb3af8dddb"},{"x":1789.0,"y":2352.0,"width":76.0,"height":62.0,"confidence":0.813991904258728,"class":"resistor","class_id":13,"detection_id":"32743e3a-f700-4f5f-8201-3ddd5bffde30"},{"x":2019.0,"y":1612.0,"width":176.0,"height":284.0,"confidence":0.8079925179481506,"class":"IC","class_id":0,"detection_id":"53682b7d-1108-4997-82d4-f526a8f23726"},{"x":690.5,"y":1382.0,"width":77.0,"height":60.0,"confidence":0.7539728283882141,"class":"resistor","class_id":13,"detection_id":"a86d6331-dee9-45cf-8a60-7b2b94b1a4ec"},{"x":2171.5,"y":2553.5,"width":213.0,"height":199.0,"confidence":0.7316686511039734,"class":"IC","class_id":0,"detection_id":"b367aa1e-2f67-4f54-8f4c-6c9b3722e4b3"},{"x":1785.0,"y":2636.5,"width":66.0,"height":55.0,"confidence":0.7088467478752136,"class":"resistor","class_id":13,"detection_id":"16b396ab-f5f7-45a1-96cd-05f460fc10f2"},{"x":1790.0,"y":2450.0,"width":74.0,"height":62.0,"confidence":0.5513125658035278,"class":"resistor","class_id":13,"detection_id":"376351a7-f5e0-462c-b320-a0c4e13fd8ef"},{"x":1778.0,"y":2744.0,"width":90.0,"height":66.0,"confidence":0.49486178159713745,"class":"resistor","class_id":13,"detection_id":"9dd71b89-0dd9-46c2-8e6f-0171a1ed1201"},{"x":1965.0,"y":1816.5,"width":70.0,"height":61.0,"confidence":0.4679402709007263,"class":"resistor","class_id":13,"detection_id":"eda085a1-dc3a-4f64-b483-4e6dda45ce3f"},{"x":1414.0,"y":2420.5,"width":70.0,"height":57.0,"confidence":0.4451841711997986,"class":"resistor","class_id":13,"detection_id":"322100a5-e318-4b86-b79b-d0f37ef0f540"},{"x":1580.5,"y":1809.0,"width":73.0,"height":62.0,"confidence":0.42910438776016235,"class":"resistor","class_id":13,"detection_id":"a21cf5d1-418e-40d3-9370-873be269a858"},{"x":681.5,"y":1500.5,"width":89.0,"height":85.0,"confidence":0.41646522283554077,"class":"transistor","class_id":15,"detection_id":"223f7c09-e447-45eb-adc0-28b43b8c11bf"},{"x":924.0,"y":2465.0,"width":60.0,"height":56.0,"confidence":0.406192421913147,"class":"resistor","class_id":13,"detection_id":"c7acfb03-c1fe-455c-a20b-1840a30c96e5"}]};
+      resolve(mockResponse);
+
+      // Optionally simulate a network error instead:
+      // reject(new Error("Internal Server Error"));
+    }, 1000);
+  });
+};
+
+function drawBoundingBox(detection, imageElement, containerElement) {
+  // 1. Calculate the scale factor if the displayed image is resized
+  const apiWidth = detection.image.width;   // 2378
+  const apiHeight = detection.image.height; // 2134
+
+  const scaleX = imageElement.clientWidth / apiWidth;
+  const scaleY = imageElement.clientHeight / apiHeight;
+
+  // 2. Adjust for Center vs Top-Left origin (Toggle isCenter based on your AI model)
+  const isCenter = true;
+  const rawX = isCenter ? (detection.x - detection.width / 2) : detection.x;
+  const rawY = isCenter ? (detection.y - detection.height / 2) : detection.y;
+
+  // 3. Create the box element
+  const box = document.createElement('div');
+  box.className = 'detected-box';
+  box.dataset.detectionId = detection.detection_id;
+
+  // 4. Scale coordinates to match the currently displayed image size
+  box.style.position = 'absolute';
+  box.style.left = (rawX * scaleX) + 'px';
+  box.style.top = (rawY * scaleY) + 'px';
+  box.style.width = (detection.width * scaleX) + 'px';
+  box.style.height = (detection.height * scaleY) + 'px';
+
+  // 5. Add border color based on inference confidence or class
+  box.style.border = `2px solid #16a34a`;
+
+  // Optional: Add a small floating label for the class name (e.g., "IC - 92%")
+  box.innerHTML = `
+    <span class="box-label">
+      ${detection.class} (${(detection.confidence * 100).toFixed(0)}%)
+    </span>
+  `;
+
+  containerElement.appendChild(box);
+}
+
+async function autoDetect() {
+  // const imgObj = bomImages.find(i => i.id === currentImgId);
+  // const base64Img = (await blobToBase64(imgObj.blob)).split(',')[1];
+  // console.log(base64Img);
+  // fetch("https://serverless.roboflow.com/compdetect/7?api_key=7G4bZNDXmwZeCHh3zSwP", {
+  //   method: "POST",
+  //   headers: {
+  //     "Content-Type": "application/x-www-form-urlencoded"
+  //   },
+  //   body: base64Img
+  // }).then(function(response) {
+  //   console.log(response.data);
+  // })
+  // .catch(function(error) {
+  //   console.log(error.message);
+  // });
+  //
+  try {
+    resp = await fetchStaticData();
+    console.log(resp);
+    for (let pred of resp.predictions) {
+      const container = document.getElementById('map-content');
+      const img = document.getElementById('map-content').querySelector('.pcb-image');
+      drawBoundingBox({...pred, image: resp.image}, img, container);
+    }
+  }
+  catch (err) {
+    console.log(err)
+  }
 }
 
 // Save Rename Changes
