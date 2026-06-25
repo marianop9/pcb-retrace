@@ -1,0 +1,208 @@
+:root {
+    --color-detection-ok: #22c55e;
+    --color-detection-ignore: #64748b;
+    --color-detection-remove:  #ef4444;
+}
+
+
+.detected-box {
+    box-sizing: border-box;
+    pointer-events: border; /* Allows clicking the box border, or set to 'none' to click through it */
+    transition: background-color 0.2s ease;
+    border: 2px solid #2563eb;
+    /* Gives it an emissive neon pop against dark components */
+    box-shadow: 0 0 8px rgba(0, 229, 255, 0.5);
+}
+
+.detected-box:hover {
+    border-color: #00a3cc; /* Subtler, deeper blue border */
+    background-color: rgba(0, 163, 204, 0.2);
+    cursor: pointer;
+}
+
+.detected-box.state-ok {
+    border: 3px solid var(--color-detection-ok);
+}
+
+.detected-box.state-ignore {
+    border: 3px solid var(--color-detection-ignore);
+}
+
+.detected-box.state-remove {
+    border: 3px solid var(--color-detection-remove);
+}
+
+.box-label {
+    position: absolute;
+    top: -20px;
+    left: -2px;
+    background: #2563eb;
+    color: white;
+    font-size: 11px;
+    padding: 2px 6px;
+    border-radius: 3px 3px 0 0;
+    white-space: nowrap;
+}
+
+.state-ok .box-label {
+    background: var(--color-detection-ok);
+}
+
+.state-ignore .box-label {
+    background: var(--color-detection-ignore);
+}
+
+.state-remove .box-label {
+    background: var(--color-detection-remove);
+}
+
+.cv-sidebar {
+    width: 380px;     /* Fixed width for consistent data entry layout */
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    background-color: #f8f9fa; /* Light background */
+    border-left: 1px solid #e2e8f0;
+    box-sizing: border-box;
+    z-index: 5;
+    transition: transform 0.2s ease-in-out, width 0.2s ease-in-out;
+}
+
+/* Utility class to hide the sidebar when CV features are inactive */
+.cv-sidebar.hidden {
+    display: none;
+}
+
+/* Styling inner components of the sidebar */
+.cv-sidebar-header {
+    background-color: #ffffff;
+    padding: 16px;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.cv-sidebar-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 16px;
+    background-color: #f8f9fa;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.cv-sidebar-actions {
+    padding: 12px 16px;
+    border-top: 1px solid #3c3c3c;
+}
+
+/* Base Detection Card Style */
+.detection-card {
+    background-color: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 14px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    transition: all 0.2s ease-in-out;
+}
+
+.detection-card:hover {
+    border-color: #cbd5e1;
+    cursor: pointer;
+}
+
+/* Sidebar card active highlight styling */
+.detection-card.selected-highlight {
+    border-color: #3b82f6; /* Blue border or similar to denote active focus */
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+}
+
+/* Card State Styles: Soft, desaturated colors for the base cards */
+.detection-card.state-ok {
+    background-color: #f0fdf4; /* Soft mint green */
+    border-color: #bbf7d0;
+}
+
+.detection-card.state-ignore {
+    background-color: #f1f5f9; /* Soft cool gray */
+    border-color: #cbd5e1;
+}
+
+.detection-card.state-remove {
+    background-color: #fef2f2; /* Soft light red */
+    border-color: #fecaca;
+}
+
+/* Content Layout inside Card */
+.detection-header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 4px;
+}
+
+.detection-class {
+    font-weight: 600;
+    font-size: 14px;
+    color: #2d3748;
+}
+
+.detection-confidence {
+    font-size: 11px;
+    font-weight: 600;
+    color: #4a5568;
+    background-color: #edf2f7;
+    padding: 2px 6px;
+    border-radius: 4px;
+}
+
+.detection-meta {
+    font-size: 12px;
+    color: #718096;
+    margin: 0 0 12px 0;
+}
+
+/* State Selector Buttons */
+.state-selector {
+    display: flex;
+    gap: 4px;
+    background-color: #f1f5f9;
+    padding: 3px;
+    border-radius: 6px;
+}
+
+.state-btn {
+    flex: 1;
+    border: none;
+    background: transparent;
+    padding: 6px 0;
+    font-size: 12px;
+    font-weight: 500;
+    color: #64748b;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.state-btn:hover {
+    color: #334155;
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
+/* Dynamic State Button Colors when Parent Card gets assigned a state */
+.detection-card.state-ok .btn-ok {
+    background-color: var(--color-detection-ok); /* Solid green */
+    color: #ffffff;
+    font-weight: 600;
+}
+
+.detection-card.state-ignore .btn-ignore {
+    background-color: var(--color-detection-ignore); /* Solid slate gray */
+    color: #ffffff;
+    font-weight: 600;
+}
+
+.detection-card.state-remove .btn-remove {
+    background-color: var(--color-detection-remove); /* Solid red */
+    color: #ffffff;
+    font-weight: 600;
+}

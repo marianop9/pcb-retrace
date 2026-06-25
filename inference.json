@@ -1,0 +1,247 @@
+{
+  "inference_id": "ced78d02-f524-47c7-a2ce-7181548db5df",
+  "time": 0.02772870392072946,
+  "image": { "width": 2378, "height": 2134 },
+  "predictions": [
+    {
+      "x": 997.0,
+      "y": 733.5,
+      "width": 184.0,
+      "height": 289.0,
+      "confidence": 0.9260022640228271,
+      "class": "IC",
+      "class_id": 0,
+      "detection_id": "4977cb6e-be72-4e45-ae9e-bb6a861da516"
+    },
+    {
+      "x": 1907.0,
+      "y": 1671.5,
+      "width": 206.0,
+      "height": 215.0,
+      "confidence": 0.8948807716369629,
+      "class": "IC",
+      "class_id": 0,
+      "detection_id": "2c3fe8ba-53f8-4f50-a64f-f8a317456a71"
+    },
+    {
+      "x": 1237.0,
+      "y": 1618.5,
+      "width": 2076.0,
+      "height": 633.0,
+      "confidence": 0.8886048197746277,
+      "class": "PCB",
+      "class_id": 2,
+      "detection_id": "084eee3e-d9f5-44c7-a37b-11ac861b6eb5"
+    },
+    {
+      "x": 1380.0,
+      "y": 742.5,
+      "width": 206.0,
+      "height": 293.0,
+      "confidence": 0.8882607817649841,
+      "class": "IC",
+      "class_id": 0,
+      "detection_id": "f1aa5a16-6653-4d04-b5b5-63e671a7de86"
+    },
+    {
+      "x": 1757.0,
+      "y": 746.5,
+      "width": 198.0,
+      "height": 293.0,
+      "confidence": 0.8837376236915588,
+      "class": "IC",
+      "class_id": 0,
+      "detection_id": "cbe81a92-8195-471d-8702-46b8a79fb91a"
+    },
+    {
+      "x": 1687.0,
+      "y": 1651.0,
+      "width": 166.0,
+      "height": 162.0,
+      "confidence": 0.7966868281364441,
+      "class": "capacitor",
+      "class_id": 5,
+      "detection_id": "43d12086-0b12-4048-aeb0-91ad40700c7e"
+    },
+    {
+      "x": 1332.5,
+      "y": 1698.0,
+      "width": 193.0,
+      "height": 308.0,
+      "confidence": 0.7712275385856628,
+      "class": "IC",
+      "class_id": 0,
+      "detection_id": "b96234bd-001e-420e-bb6e-b889655f0f22"
+    },
+    {
+      "x": 621.5,
+      "y": 724.5,
+      "width": 191.0,
+      "height": 291.0,
+      "confidence": 0.7473987340927124,
+      "class": "IC",
+      "class_id": 0,
+      "detection_id": "de538672-44a8-4e17-91f6-3e70ee30d0c7"
+    },
+    {
+      "x": 1520.5,
+      "y": 1769.0,
+      "width": 65.0,
+      "height": 44.0,
+      "confidence": 0.7329503297805786,
+      "class": "resistor",
+      "class_id": 13,
+      "detection_id": "1841bdb7-a9ff-4434-a15e-3870df10fc26"
+    },
+    {
+      "x": 1698.5,
+      "y": 943.5,
+      "width": 69.0,
+      "height": 53.0,
+      "confidence": 0.7160245180130005,
+      "class": "resistor",
+      "class_id": 13,
+      "detection_id": "22f73722-596b-437f-9598-6b57f6cf47f1"
+    },
+    {
+      "x": 1522.5,
+      "y": 1588.5,
+      "width": 67.0,
+      "height": 45.0,
+      "confidence": 0.7028809189796448,
+      "class": "resistor",
+      "class_id": 13,
+      "detection_id": "406f3034-304e-4177-a9f9-744a9ea1a1a7"
+    },
+    {
+      "x": 1120.0,
+      "y": 841.5,
+      "width": 1970.0,
+      "height": 929.0,
+      "confidence": 0.6947012543678284,
+      "class": "PCB",
+      "class_id": 2,
+      "detection_id": "45762189-8451-41ff-a3c5-25705e738b21"
+    },
+    {
+      "x": 544.5,
+      "y": 919.0,
+      "width": 61.0,
+      "height": 42.0,
+      "confidence": 0.6468733549118042,
+      "class": "resistor",
+      "class_id": 13,
+      "detection_id": "d0f06af1-3d7a-4ce0-955b-39ee07dba95c"
+    },
+    {
+      "x": 425.5,
+      "y": 523.0,
+      "width": 63.0,
+      "height": 44.0,
+      "confidence": 0.6139618754386902,
+      "class": "resistor",
+      "class_id": 13,
+      "detection_id": "711981e5-fdfd-40a3-8440-fb5b38ea2f7f"
+    },
+    {
+      "x": 1314.5,
+      "y": 933.5,
+      "width": 69.0,
+      "height": 49.0,
+      "confidence": 0.6067811250686646,
+      "class": "resistor",
+      "class_id": 13,
+      "detection_id": "14939fcf-aca4-4a8c-81f3-df50d97dc3f6"
+    },
+    {
+      "x": 1520.5,
+      "y": 1674.5,
+      "width": 69.0,
+      "height": 51.0,
+      "confidence": 0.605312705039978,
+      "class": "resistor",
+      "class_id": 13,
+      "detection_id": "c12b251e-357c-4e11-bbde-c65316c34d03"
+    },
+    {
+      "x": 929.5,
+      "y": 927.5,
+      "width": 73.0,
+      "height": 45.0,
+      "confidence": 0.5943238735198975,
+      "class": "resistor",
+      "class_id": 13,
+      "detection_id": "87746000-71d8-400e-8457-7f17cfc3f6de"
+    },
+    {
+      "x": 411.0,
+      "y": 742.0,
+      "width": 58.0,
+      "height": 48.0,
+      "confidence": 0.5868852138519287,
+      "class": "resistor",
+      "class_id": 13,
+      "detection_id": "a99bba97-eb3c-42b2-b1e4-05ae7606fe9a"
+    },
+    {
+      "x": 1146.0,
+      "y": 1556.5,
+      "width": 60.0,
+      "height": 39.0,
+      "confidence": 0.5864242911338806,
+      "class": "resistor",
+      "class_id": 13,
+      "detection_id": "effd7bef-209a-45c1-95da-919aefc3d04d"
+    },
+    {
+      "x": 1520.0,
+      "y": 1486.0,
+      "width": 60.0,
+      "height": 48.0,
+      "confidence": 0.5862589478492737,
+      "class": "resistor",
+      "class_id": 13,
+      "detection_id": "043861e5-6870-468a-bf78-221aa46ffb24"
+    },
+    {
+      "x": 1957.0,
+      "y": 1480.0,
+      "width": 70.0,
+      "height": 54.0,
+      "confidence": 0.5168728828430176,
+      "class": "resistor",
+      "class_id": 13,
+      "detection_id": "26fb7322-b99c-42cf-8279-7980cef52aad"
+    },
+    {
+      "x": 418.0,
+      "y": 635.0,
+      "width": 84.0,
+      "height": 92.0,
+      "confidence": 0.44767820835113525,
+      "class": "transistor",
+      "class_id": 15,
+      "detection_id": "a4215867-5bf2-4e36-ba76-e22a818d9bb0"
+    },
+    {
+      "x": 1143.0,
+      "y": 1652.5,
+      "width": 72.0,
+      "height": 41.0,
+      "confidence": 0.41751086711883545,
+      "class": "resistor",
+      "class_id": 13,
+      "detection_id": "c47dd237-8eb0-4a08-b00b-d54569fccdf4"
+    },
+    {
+      "x": 1514.5,
+      "y": 1873.0,
+      "width": 71.0,
+      "height": 46.0,
+      "confidence": 0.41532349586486816,
+      "class": "resistor",
+      "class_id": 13,
+      "detection_id": "e279975b-53e8-4378-a3c2-e2ea26d74811"
+    }
+  ]
+}
