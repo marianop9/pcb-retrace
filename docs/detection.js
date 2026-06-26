@@ -60,8 +60,8 @@ async function runAutoDetect() {
   // });
   //
   try {
-    const imgObj = bomImages.find(i => i.id === currentImgId);
-    const base64Img = (await blobToBase64(imgObj.blob)).split(',')[1];
+    const imgObj = bomImages.find((i) => i.id === currentImgId);
+    const base64Img = (await blobToBase64(imgObj.blob)).split(",")[1];
 
     const data = await fetch("https://serverless.roboflow.com/compdetect/7?api_key=7G4bZNDXmwZeCHh3zSwP", {
       method: "POST",
@@ -352,8 +352,10 @@ async function persistPredictions() {
       continue;
     }
 
+    const componentClass = pred.overrideClass || pred.class;
+
     // use "Q" as a catch-all reference designator
-    const refDes = refDesMap.get(pred.class) ?? "Q";
+    const refDes = refDesMap.get(componentClass) ?? "Q";
     if (refCountStart.get(refDes) < 0) {
       const refCount = Math.max(
         bomData
@@ -383,7 +385,7 @@ async function persistPredictions() {
   await loadProjectData();
   switchView("list");
 
-  toggleDetectionSidebar()
+  toggleDetectionSidebar();
   document.getElementById("btn-add-to-bom").disabled = true;
 }
 
@@ -398,6 +400,26 @@ function renderDetectionList(list) {
   const listContainer = document.getElementById("detection-list");
   listContainer.innerHTML = ""; // Clear previous items
 
+  // const supportedClasses = ["resistor", "capacitor", "inductor", "diode", "IC"];
+  const supportedClasses = [
+    "IC",
+    "LED",
+    "battery",
+    "buzzer",
+    "capacitor",
+    "clock",
+    "connector",
+    "diode",
+    "display",
+    "fuse",
+    "inductor",
+    "potentiometer",
+    "relay",
+    "resistor",
+    "switch",
+    "transistor",
+  ];
+
   list.forEach((item) => {
     const card = document.createElement("div");
     card.className = `detection-card ${item.state ? "state-" + item.state : ""}`;
@@ -411,11 +433,29 @@ function renderDetectionList(list) {
       }
     });
 
+    // Check if class has been overridden, otherwise fall back to original model class
+    const currentClass = item.overrideClass || item.class;
+    // If overridden, show confidence as 'M', otherwise use the percentage
+    const isOverridden = !!item.overrideClass;
+    const confidenceText = isOverridden
+      ? "M"
+      : `${Math.round(item.confidence * 100)}%`;
+
+    // Generate dropdown options dynamically, selecting the active class
+    const optionsHtml = supportedClasses
+      .map(
+        (cls) =>
+          `<option value="${cls}" ${currentClass === cls ? "selected" : ""}>${cls}</option>`,
+      )
+      .join("");
+
     card.innerHTML = `
-            <div class="detection-body">
+            <div class="detection-body" data-id="${item.id}">
                 <div class="detection-header-row">
-                    <span class="detection-class">${item.class}</span>
-                    <span class="detection-confidence">${Math.round(item.confidence * 100)}%</span>
+                    <select class="detection-class-select" data-id="${item.id}">
+                      ${optionsHtml}
+                    </select>
+                    <span class="detection-confidence ${isOverridden ? "manual" : ""}">${confidenceText}</span>
                 </div>
                 <!-- <p class="detection-meta">Package: ${item.package} | Pos: X:${item.x}, Y:${item.y}</p> -->
                 <p class="detection-meta">Pos: X:${item.x}, Y:${item.y}</p>
@@ -425,7 +465,24 @@ function renderDetectionList(list) {
                 <button class="state-btn btn-ignore">Ignore</button>
                 <!-- <button class="state-btn btn-remove">Remove</button> -->
             </div>
-        `;
+    `;
+
+    // Attach listener to handle class selection overrides
+    const select = card.querySelector(".detection-class-select");
+    select.addEventListener("change", (e) => {
+      const newClass = e.target.value;
+      handleClassOverride(item.id, newClass);
+      // Trigger any necessary canvas redraw here if you draw bounding box labels
+      let newConf = "";
+      if (newClass === currentClass) {
+        newConf = confidenceText;
+      } else if (newClass !== item.class) {
+        newConf = "M";
+      } else {
+        newConf = `${Math.round(item.confidence * 100)}%`;
+      }
+      updateCanvasBoundingBoxLabel(item.id, newClass, newConf);
+    });
 
     // Attach event listeners to the buttons programmatically
     card
@@ -440,6 +497,23 @@ function renderDetectionList(list) {
 
     listContainer.appendChild(card);
   });
+}
+
+// Function to handle class overrides from the dropdown
+function handleClassOverride(itemId, selectedClass) {
+  // Find the item in your main data array (assuming it's named 'detectionList' or similar)
+  const item = currentPredictions.predictions.find((d) => d.id === itemId);
+  if (!item) return;
+
+  if (selectedClass === item.class) {
+    // If they changed it back to the original model output, clear the override
+    delete item.overrideClass;
+  } else {
+    // Save the manually overridden class
+    item.overrideClass = selectedClass;
+  }
+
+  renderDetectionList(currentPredictions.predictions);
 }
 
 function focusSidebarCard(id) {
@@ -553,7 +627,14 @@ function updateCanvasBoundingBoxColor(id, state) {
   console.log(
     `Changing bounding box color for ${id} to represent state: ${state}`,
   );
-  const box = document.querySelector(`.detected-box[data-id="${id}"`);
+  const box = document.querySelector(`.detected-box[data-id="${id}"]`);
   box.classList.remove("state-ok", "state-ignore");
   box.classList.add("state-" + state);
+}
+
+function updateCanvasBoundingBoxLabel(id, label, confidenceText) {
+  const boxLabel = document.querySelector(
+    `.detected-box[data-id="${id}"] > .box-label`,
+  );
+  boxLabel.textContent = `${label} (${confidenceText})`;
 }
