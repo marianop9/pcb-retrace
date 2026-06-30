@@ -102,15 +102,15 @@ async function runAutoDetect() {
 
     let data;
     if (useApi) {
-      // const imgObj = bomImages.find((i) => i.id === currentImgId);
-      // const base64Img = (await blobToBase64(imgObj.blob)).split(",")[1];
-      // data = await fetch("https://serverless.roboflow.com/compdetect/7?api_key=7G4bZNDXmwZeCHh3zSwP", {
-      //   method: "POST",
-      //   headers: {
-      //     "Content-Type": "application/x-www-form-urlencoded"
-      //   },
-      //   body: base64Img
-      // }).then((response) => response.json());
+      const imgObj = bomImages.find((i) => i.id === currentImgId);
+      const base64Img = (await blobToBase64(imgObj.blob)).split(",")[1];
+      data = await fetch("https://serverless.roboflow.com/compdetect/7?api_key=7G4bZNDXmwZeCHh3zSwP", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded"
+        },
+        body: base64Img
+      }).then((response) => response.json());
       // data = await fetchStaticData();
     } else {
       data = await cvDetectComponents(imgEl);
